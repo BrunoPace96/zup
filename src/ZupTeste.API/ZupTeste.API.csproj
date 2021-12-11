@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharedKernel\ZupTeste.Core\ZupTeste.Core.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.DataContracts\ZupTeste.DataContracts.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.DomainValidation\ZupTeste.DomainValidation.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.OperationResult\ZupTeste.OperationResult.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.Repository\ZupTeste.Repository.csproj" />
+      <ProjectReference Include="..\ZupTeste.Domain\ZupTeste.Domain.csproj" />
+      <ProjectReference Include="..\ZupTeste.Infra\ZupTeste.Infra.csproj" />
+    </ItemGroup>
+
+</Project>

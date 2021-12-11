@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharedKernel\ZupTeste.Core\ZupTeste.Core.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.DataContracts\ZupTeste.DataContracts.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.DomainValidation\ZupTeste.DomainValidation.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.OperationResult\ZupTeste.OperationResult.csproj" />
+      <ProjectReference Include="..\SharedKernel\ZupTeste.Repository\ZupTeste.Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+    </ItemGroup>
+
+</Project>
