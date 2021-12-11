@@ -23,7 +23,7 @@ namespace ZupTeste.Repository.Repository
         
         Task<PaginatedResult<TEntity>> QueryPagedAndCountAsync<TSpecification, TQuery>(
             TSpecification specification,
-            FilterQuery<TQuery> query
+            PaginatedQuery<TQuery> query
         ) where TSpecification : ISpecification<TEntity>;
         
         Task<bool> CheckIfExistsAsync<TSpecification>(TSpecification specification) 

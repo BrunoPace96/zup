@@ -11,7 +11,7 @@ public class Funcionario : EntityBase, IAggregateRoot
     
     public string Email { get; set; }
 
-    public int NumeroChapa { get; set; } 
+    public string NumeroChapa { get; set; } 
 
     public string Senha { get; set; }
 

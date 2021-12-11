@@ -42,10 +42,13 @@ public class ReadOnlyRepository<TEntity> : IReadOnlyRepository<TEntity>
         
     public async Task<PaginatedResult<TEntity>> QueryPagedAndCountAsync<TSpecification, TQuery>(
         TSpecification specification, 
-        FilterQuery<TQuery> query
+        PaginatedQuery<TQuery> query
     ) where TSpecification : ISpecification<TEntity>
     {
-        var items = await ApplySpecification(specification).ToListAsync();
+        var limit = query.PageSize;
+        var offset = (query.Page - 1) * query.PageSize;
+        
+        var items = await ApplySpecification(specification).Skip(offset).Take(limit).ToListAsync();
         var count = await ApplySpecification(specification).CountAsync();
 
         return new PaginatedResult<TEntity>

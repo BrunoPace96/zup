@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ZupTeste.API.IntegrationTests.Generator;
+using ZupTeste.Core.Extensions;
 using ZupTeste.Infra.Data.Context;
 
 namespace ZupTeste.API.IntegrationTests;
@@ -25,6 +28,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
             services.Remove(descriptor);
 
+            services.AddScopedByType(
+                typeof(BaseGenerator<>),
+                type => type,
+                Assembly.Load("ZupTeste.Api.IntegrationTests"));
+            
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDbForTesting");

@@ -5,7 +5,7 @@ using ZupTeste.DomainValidation.Domain;
 using ZupTeste.Repository.Repository;
 using ZupTeste.Repository.UnitOfWork.Factories;
 
-namespace ZupTeste.Domain.Funcionarios.Write;
+namespace ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
 
 public class CriarFuncionarioValidator : IRequestHandler<CriarFuncionarioCommand, CriarFuncionarioResult>
 {
@@ -46,6 +46,8 @@ public class CriarFuncionarioValidator : IRequestHandler<CriarFuncionarioCommand
                     $"Lider com o email {command.LiderEmail} não encontrado", nameof(command.LiderEmail));
                 return null;
             }
+
+            funcionario.LiderId = lider.Id;
         }
 
         funcionario.Senha = PasswordUtil.EncryptNewPassword(funcionario.Senha);
