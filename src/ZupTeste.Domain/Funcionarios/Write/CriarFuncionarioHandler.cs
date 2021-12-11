@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using ZupTeste.Core.Utils;
 using ZupTeste.DomainValidation.Domain;
 using ZupTeste.Repository.Repository;
 using ZupTeste.Repository.UnitOfWork.Factories;
@@ -18,7 +19,8 @@ public class CriarFuncionarioValidator : IRequestHandler<CriarFuncionarioCommand
         IDomainValidationProvider validator,
         IUnitOfWorkScopeFactory unitOfWork,
         IRepository<Funcionario> repository,
-        IMapper mapper, IReadOnlyRepository<Funcionario> readOnlyRepository)
+        IMapper mapper, 
+        IReadOnlyRepository<Funcionario> readOnlyRepository)
     {
         _repository = repository;
         _mapper = mapper;
@@ -46,6 +48,8 @@ public class CriarFuncionarioValidator : IRequestHandler<CriarFuncionarioCommand
             }
         }
 
+        funcionario.Senha = PasswordUtil.EncryptNewPassword(funcionario.Senha);
+        
         var scope = _unitOfWork.Get();
         await _repository.SaveAsync(funcionario);
         await scope.CommitAsync();

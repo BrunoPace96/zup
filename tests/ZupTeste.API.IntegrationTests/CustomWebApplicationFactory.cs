@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace ZupTeste.API.IntegrationTests;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    public IServiceProvider ServiceProvider { get; private set; }
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -50,6 +52,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             //                             "database with test messages. Error: {Message}", ex.Message);
             //     }
             // }
+            
+            ServiceProvider = services.BuildServiceProvider();
         }).UseEnvironment("IntegrationTest");
     }
 }

@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bogus;
 using Bogus.Extensions.Brazil;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 using ZupTeste.API.IntegrationTests.Common;
+using ZupTeste.Domain.Funcionarios;
 using ZupTeste.Domain.Funcionarios.Write;
+using ZupTeste.Repository.Repository;
 
 namespace ZupTeste.API.IntegrationTests.Tests;
 
 public class FuncionarioControllerTest : BaseHttpTest
 {
+    
+    private readonly IReadOnlyRepository<Funcionario> _readOnlyRepository;
+
     public FuncionarioControllerTest(CustomWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
     {
+        _readOnlyRepository = factory.ServiceProvider.GetService<IReadOnlyRepository<Funcionario>>();
     }
     
     [Fact]
@@ -23,6 +30,11 @@ public class FuncionarioControllerTest : BaseHttpTest
 
         Assert.NotNull(data);
         Assert.NotEqual(Guid.Empty, data.Id);
+
+        var funcionarioDatabase = await _readOnlyRepository.FirstOrDefaultAsync(data.Id);
+        
+        Assert.NotNull(funcionarioDatabase);
+        Assert.NotEqual("1@aaaBBB", funcionarioDatabase.Senha);
     }
     
     private async Task<CriarFuncionarioResult> CriarFuncionarioAleatorio()
@@ -33,7 +45,7 @@ public class FuncionarioControllerTest : BaseHttpTest
             o.Sobrenome = f.Person.LastName;
             o.Email = f.Person.Email;
             o.NumeroChapa = f.Random.Number(100000, 99999999).ToString();
-            o.Senha = f.Internet.Password();
+            o.Senha = "1@aaaBBB";
             o.Telefones = new List<string>
             {
                 f.Phone.PhoneNumber(),
