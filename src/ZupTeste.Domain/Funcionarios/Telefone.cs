@@ -1,10 +1,12 @@
 ﻿using ZupTeste.Core;
+using ZupTeste.Core.Utils;
 
 namespace ZupTeste.Domain.Funcionarios;
 
 public class Telefone : EntityBase
 {
-    public string Numero { get; set; }
+    private string _numero;
+    public string Numero { get => _numero; set => _numero = value.UnMask(); }
     
     
     // Relationships

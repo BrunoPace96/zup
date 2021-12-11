@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Bogus;
+using ZupTeste.API.IntegrationTests.Common;
 using ZupTeste.Domain.Funcionarios;
 using ZupTeste.Repository.Repository;
 using ZupTeste.Repository.UnitOfWork.Factories;
@@ -11,7 +13,7 @@ namespace ZupTeste.API.IntegrationTests.Generator
         public FuncionarioGenerator(IUnitOfWorkScopeFactory unitOfWork, IRepository<Funcionario> repository) 
             : base(unitOfWork, repository)
         {
-            Rules = new Faker<Funcionario>("pt_BR")
+            Rules = new Faker<Funcionario>(LocaleConstants.Locale)
                 .Rules((f, o) =>
                 {
                     o.Nome = f.Person.FirstName;

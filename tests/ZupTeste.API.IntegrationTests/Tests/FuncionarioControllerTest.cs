@@ -7,8 +7,10 @@ using Xunit;
 using Xunit.Abstractions;
 using ZupTeste.API.IntegrationTests.Common;
 using ZupTeste.API.IntegrationTests.Generator;
+using ZupTeste.Core.Utils;
 using ZupTeste.DataContracts.Results;
 using ZupTeste.Domain.Funcionarios;
+using ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId;
 using ZupTeste.Domain.Funcionarios.Read.ObterListaFuncionarios;
 using ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
 using ZupTeste.Repository.Repository;
@@ -98,5 +100,38 @@ public class FuncionarioControllerTest : BaseHttpTest
         Assert.NotNull(data);
         Assert.Equal(2, data.Items.Count);
         Assert.True(data.TotalItems >= 10);
+    }
+    
+    [Fact]
+    public async Task Obter_Funcionario_Por_Id()
+    {
+        var funcionario = await _generator.GenerateAndSaveAsync();
+        
+        var data = await HttpGetAsync<ObterFuncionarioPeloIdResult>($"api/funcionarios/{funcionario.Id}");
+        
+        Assert.NotNull(data);
+        Assert.Equal(funcionario.Id, data.Id);
+        Assert.Equal(funcionario.Nome, data.Nome);
+        Assert.Equal(funcionario.Sobrenome, data.Sobrenome);
+        Assert.Equal(funcionario.NumeroChapa, data.NumeroChapa);
+        
+        Assert.All(funcionario.Telefones, x => Assert.Contains(x.Numero.UnMask(), x.Numero));
+    }
+    
+    [Fact]
+    public async Task Obter_Funcionario_Por_Id_Com_Lider()
+    {
+        var lider = await _generator.GenerateAndSaveAsync();
+        
+        var funcionario = await _generator
+            .WithRule(x => x.LiderId, lider.Id)
+            .GenerateAndSaveAsync();
+        
+        var data = await HttpGetAsync<ObterFuncionarioPeloIdResult>($"api/funcionarios/{funcionario.Id}");
+        
+        Assert.NotNull(data);
+        Assert.Equal(funcionario.Id, data.Id);
+        Assert.NotNull(data.Lider);
+        Assert.Equal(lider.Id, data.Lider.Id);
     }
 }

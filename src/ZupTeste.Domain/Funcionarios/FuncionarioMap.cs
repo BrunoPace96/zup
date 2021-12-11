@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ZupTeste.DataContracts.Results;
 using ZupTeste.Domain.Funcionarios.Read;
+using ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId;
 using ZupTeste.Domain.Funcionarios.Read.ObterListaFuncionarios;
 using ZupTeste.Domain.Funcionarios.Write;
 using ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
@@ -21,6 +22,9 @@ namespace ZupTeste.Domain.Funcionarios
                 .ForMember(x => x.Telefones, x => x.MapFrom(mp => mp.Telefones.Select(s => s.Numero)));
             
             CreateMap<PaginatedResult<Funcionario>, PaginatedResult<ObterListaFuncionariosResult>>();
+            
+            CreateMap<Funcionario, ObterFuncionarioPeloIdResult>()
+                .ForMember(x => x.Telefones, x => x.MapFrom(mp => mp.Telefones.Select(s => s.Numero)));
         }
     }
 }

@@ -4,6 +4,7 @@ using ZupTeste.API.Common.Controllers;
 using ZupTeste.DataContracts.Queries;
 using ZupTeste.DataContracts.Results;
 using ZupTeste.Domain.Funcionarios.Read;
+using ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId;
 using ZupTeste.Domain.Funcionarios.Read.ObterListaFuncionarios;
 using ZupTeste.Domain.Funcionarios.Write;
 using ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
@@ -34,6 +35,16 @@ public class FuncionariosController : BaseController
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<PaginatedResult<ObterListaFuncionariosResult>>> List(
         [FromQuery] PaginatedQuery<PaginatedResult<ObterListaFuncionariosResult>> command,
+        CancellationToken cancellationToken = new ())
+    {
+        var result = await _mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+    
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<ActionResult<PaginatedResult<ObterListaFuncionariosResult>>> Get(
+        [FromRoute] ByIdQuery<ObterFuncionarioPeloIdResult> command,
         CancellationToken cancellationToken = new ())
     {
         var result = await _mediator.Send(command, cancellationToken);
