@@ -41,6 +41,8 @@ public sealed class Repository<TEntity> : IRepository<TEntity>
         }
     }
 
-    public void Delete(TEntity entity) => 
-        entity.Deleted();
+    public void Delete(TEntity entity)
+    {
+        _set.Remove(entity);
+    }
 }

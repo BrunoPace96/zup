@@ -25,10 +25,12 @@ public class FuncionarioControllerTest : BaseHttpTest
     
     private readonly IReadOnlyRepository<Funcionario> _readOnlyRepository;
     private readonly FuncionarioGenerator _generator;
+    private readonly IReadOnlyRepository<Telefone> _telefoneRepository;
 
     public FuncionarioControllerTest(CustomWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
     {
         _readOnlyRepository = factory.ServiceProvider.GetService<IReadOnlyRepository<Funcionario>>();
+        _telefoneRepository = factory.ServiceProvider.GetService<IReadOnlyRepository<Telefone>>();
         _generator = factory.ServiceProvider.GetService<FuncionarioGenerator>();
     }
     
@@ -181,5 +183,38 @@ public class FuncionarioControllerTest : BaseHttpTest
         {
             Assert.DoesNotContain(telefone.Numero.UnMask(), telefonesAntigos);
         }
+    }
+    
+    [Fact]
+    public async Task Deletar_Funcionario()
+    {
+        var lider = await _generator.GenerateAndSaveAsync();
+        
+        var funcionario = await _generator
+            .WithRule(x => x.LiderId, lider.Id)
+            .GenerateAndSaveAsync();
+        
+        await HttpDeleteAsync($"api/funcionarios/{funcionario.Id}");
+
+        var funcionarioDb = await _readOnlyRepository.FirstOrDefaultAsync(funcionario.Id);
+        
+        Assert.Null(funcionarioDb);
+        
+        var liderDb = await _readOnlyRepository
+            .GetQuery()
+            .AsNoTracking()
+            .Include(x => x.Funcionarios)
+            .FirstOrDefaultAsync(x => x.Id == lider.Id);
+
+        Assert.NotNull(liderDb);
+        Assert.Empty(liderDb.Funcionarios);
+
+        var telefones = await _telefoneRepository
+            .GetQuery()
+            .AsNoTracking()
+            .Where(x => x.FuncionarioId == funcionario.Id)
+            .ToListAsync();
+
+        Assert.Empty(telefones);
     }
 }

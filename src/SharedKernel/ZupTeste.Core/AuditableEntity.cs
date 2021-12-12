@@ -4,9 +4,6 @@ namespace ZupTeste.Core
 {
     public abstract partial class EntityBase
     {
-        public bool IsDeleted { get; private set;  }
-        public DateTime? DeletedAt { get; private set; }
-        
         [Required]
         public DateTime CreatedAt { get; private set; }
         
@@ -21,11 +18,5 @@ namespace ZupTeste.Core
 
         public virtual void Updated() =>
             LastUpdatedAt = DateTime.UtcNow;
-
-        public virtual void Deleted()
-        {
-            IsDeleted = true;
-            DeletedAt = DateTime.UtcNow;
-        }
     }
 }

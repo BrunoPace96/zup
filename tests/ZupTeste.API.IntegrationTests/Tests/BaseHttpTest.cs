@@ -128,8 +128,11 @@ namespace ZupTeste.API.IntegrationTests.Tests
             var response = await SendAsync(requestMessage);
             
             Assert.Equal(statusCode, response.StatusCode);
+            
+            if(await response.Content.ReadAsByteArrayAsync() != Array.Empty<byte>())
+                return await response.Content.ReadFromJsonAsync<object>();
 
-            return await response.Content.ReadFromJsonAsync<object>();
+            return null;
         }
 
         protected async Task<HttpResponseMessage> SendAsync(HttpRequestMessage requestMessage)

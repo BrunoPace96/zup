@@ -18,6 +18,7 @@ public class TelefoneMapping : IEntityTypeConfiguration<Telefone>
             
         builder.HasOne(x => x.Funcionario)
             .WithMany(x => x.Telefones)
-            .HasForeignKey(x => x.FuncionarioId);
+            .HasForeignKey(x => x.FuncionarioId)
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
 }

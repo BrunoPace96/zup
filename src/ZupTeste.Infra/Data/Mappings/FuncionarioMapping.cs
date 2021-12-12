@@ -42,9 +42,9 @@ public class FuncionarioMapping : IEntityTypeConfiguration<Funcionario>
 
         builder.HasOne(x => x.Lider)
             .WithMany(x => x.Funcionarios)
-            .HasForeignKey(x => x.LiderId);
-        
-        
+            .HasForeignKey(x => x.LiderId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         // Indexes
 
         builder.HasIndex(x => x.NumeroChapa)
