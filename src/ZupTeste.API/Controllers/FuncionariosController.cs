@@ -7,6 +7,7 @@ using ZupTeste.Domain.Funcionarios.Read;
 using ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId;
 using ZupTeste.Domain.Funcionarios.Read.ObterListaFuncionarios;
 using ZupTeste.Domain.Funcionarios.Write;
+using ZupTeste.Domain.Funcionarios.Write.AtualizarFuncionario;
 using ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
 
 namespace ZupTeste.API.Controllers;
@@ -45,6 +46,16 @@ public class FuncionariosController : BaseController
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<PaginatedResult<ObterListaFuncionariosResult>>> Get(
         [FromRoute] ByIdQuery<ObterFuncionarioPeloIdResult> command,
+        CancellationToken cancellationToken = new ())
+    {
+        var result = await _mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+    
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<ActionResult<AtualizarFuncionarioResult>> Put(
+        [FromBody] AtualizarFuncionarioCommand command,
         CancellationToken cancellationToken = new ())
     {
         var result = await _mediator.Send(command, cancellationToken);

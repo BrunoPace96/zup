@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ZupTeste.DomainValidation.Domain.Behaviours;
 
-namespace ZupTeste.Infra.IoC.Setup
+namespace ZupTeste.Infra.DI.Setup
 {
     public static class MediatorSetup
     {

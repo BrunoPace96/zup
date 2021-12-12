@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using ZupTeste.Infra.Data.Context;
 using ZupTeste.Infra.Settings;
 
-namespace ZupTeste.Infra.IoC.Setup
+namespace ZupTeste.Infra.DI.Setup
 {
     public static class DatabaseSetup
     {

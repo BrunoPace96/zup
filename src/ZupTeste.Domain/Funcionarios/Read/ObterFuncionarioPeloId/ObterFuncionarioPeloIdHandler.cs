@@ -30,15 +30,15 @@ namespace ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId
         )
         {
             var specification = new ObterFuncionarioPeloIdSpecification(query.Id);
-            var student = await _repository.FirstOrDefaultAsync(specification);
+            var funcionario = await _repository.FirstOrDefaultAsync(specification);
 
-            if (student == null)
+            if (funcionario == null)
             {
                 _validator.AddNotFoundError();
                 return null;
             }
 
-            return _mapper.Map<ObterFuncionarioPeloIdResult>(student);
+            return _mapper.Map<ObterFuncionarioPeloIdResult>(funcionario);
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ZupTeste.Infra.IoC.Setup
+namespace ZupTeste.Infra.DI.Setup
 {
     public static class ValidationSetup
     {

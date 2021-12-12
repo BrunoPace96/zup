@@ -1,7 +1,7 @@
 using ZupTeste.API.Common.Middlewares;
 using ZupTeste.API.Common.Setup;
 using ZupTeste.Infra.Data.Context;
-using ZupTeste.Infra.IoC;
+using ZupTeste.Infra.DI;
 using ZupTeste.Infra.Settings;
 
 var builder = WebApplication.CreateBuilder(args);

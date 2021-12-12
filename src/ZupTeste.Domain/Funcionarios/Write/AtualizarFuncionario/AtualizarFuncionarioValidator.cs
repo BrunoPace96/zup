@@ -1,11 +1,11 @@
 using FluentValidation;
 using ZupTeste.DomainValidation.Extensions;
 
-namespace ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
+namespace ZupTeste.Domain.Funcionarios.Write.AtualizarFuncionario;
 
-public class CriarFuncionarValidator : AbstractValidator<CriarFuncionarioCommand>
+public class AtualizarFuncionarioValidator : AbstractValidator<AtualizarFuncionarioCommand>
 {
-    public CriarFuncionarValidator()
+    public AtualizarFuncionarioValidator()
     {
         RuleFor(x => x.Nome)
             .RequiredWithMessage()
@@ -18,10 +18,6 @@ public class CriarFuncionarValidator : AbstractValidator<CriarFuncionarioCommand
         RuleFor(x => x.Email)
             .RequiredWithMessage()
             .MaximumLengthWithMessage(256);
-        
-        RuleFor(x => x.Senha)
-            .RequiredWithMessage()
-            .IsValidPassword();
 
         RuleFor(x => x.NumeroChapa)
             .RequiredWithMessage()

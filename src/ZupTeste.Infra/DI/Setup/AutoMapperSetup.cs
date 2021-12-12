@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ZupTeste.Infra.IoC.Setup
+namespace ZupTeste.Infra.DI.Setup
 {
     public static class AutoMapperSetup
     {

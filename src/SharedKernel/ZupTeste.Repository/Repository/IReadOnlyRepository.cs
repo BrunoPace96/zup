@@ -7,6 +7,8 @@ namespace ZupTeste.Repository.Repository
 {
     public interface IReadOnlyRepository<TEntity>
     {
+        IQueryable<TEntity> GetQuery();
+        
         Task<TEntity> FirstOrDefaultAsync(Guid id);
 
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);

@@ -2,11 +2,11 @@
 using ZupTeste.DomainValidation.DI;
 using ZupTeste.Infra.Data.Repositories;
 using ZupTeste.Infra.Data.UnitOfWork;
-using ZupTeste.Infra.IoC.Setup;
+using ZupTeste.Infra.DI.Setup;
 using ZupTeste.Infra.Settings;
 using ZupTeste.Repository.DI;
 
-namespace ZupTeste.Infra.IoC;
+namespace ZupTeste.Infra.DI;
 
 public static class Injector
 {

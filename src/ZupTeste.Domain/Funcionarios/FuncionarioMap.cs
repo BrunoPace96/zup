@@ -4,6 +4,7 @@ using ZupTeste.Domain.Funcionarios.Read;
 using ZupTeste.Domain.Funcionarios.Read.ObterFuncionarioPeloId;
 using ZupTeste.Domain.Funcionarios.Read.ObterListaFuncionarios;
 using ZupTeste.Domain.Funcionarios.Write;
+using ZupTeste.Domain.Funcionarios.Write.AtualizarFuncionario;
 using ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
 
 namespace ZupTeste.Domain.Funcionarios
@@ -25,6 +26,13 @@ namespace ZupTeste.Domain.Funcionarios
             
             CreateMap<Funcionario, ObterFuncionarioPeloIdResult>()
                 .ForMember(x => x.Telefones, x => x.MapFrom(mp => mp.Telefones.Select(s => s.Numero)));
+            
+            CreateMap<AtualizarFuncionarioCommand, Funcionario>()
+                .ForMember(x => x.Telefones,
+                    x => x.MapFrom(mp => mp.Telefones.Select(t => new Telefone { Numero = t })));
+            
+            CreateMap<Funcionario, AtualizarFuncionarioResult>();
+
         }
     }
 }

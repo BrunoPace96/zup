@@ -24,6 +24,9 @@ public class ReadOnlyRepository<TEntity> : IReadOnlyRepository<TEntity>
         _specificationEvaluator = SpecificationEvaluator.Default;
     }
 
+    public virtual IQueryable<TEntity> GetQuery() =>
+        _set.AsQueryable();
+
     public virtual async Task<TEntity> FirstOrDefaultAsync(Guid id) =>
         await _set.FirstOrDefaultAsync(e => e.Id == id);
         
