@@ -67,3 +67,14 @@ O projeto `Zup.Teste.API.IntegrationTests` cuida dos testes de integração, a a
    - Fail-Fast Principle
    - Mediator
    - Repository Pattern
+
+
+
+
+
+
+#### Adicionar novas migrations
+```
+cd .\src\ZupTeste.Infra\
+dotnet ef -s ../ZupTeste.API -v migrations add [MIGRATION] -c DatabaseContext -o "Data/Migrations"
+```

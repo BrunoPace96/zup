@@ -16,6 +16,8 @@ public class DatabaseContext : DbContext
         builder
             .ConfigureDefaultStringProperties();
 
+        builder.SeedAdministradores();
+        
         base.OnModelCreating(builder);
     }
 

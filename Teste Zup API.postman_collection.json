@@ -11,11 +11,21 @@
 				{
 					"name": "Criar",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Antonio\",\r\n    \"sobrenome\": \"Garcia\",\r\n    \"email\": \"antonio.garcial@email.com\",\r\n    \"numeroChapa\": \"01010102\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 99999-9999\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"nome\": \"Antonio\",\r\n    \"sobrenome\": \"Garcia\",\r\n    \"email\": \"antonio.garcial1@email.com\",\r\n    \"numeroChapa\": \"010101021\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 99999-9999\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -38,6 +48,16 @@
 				{
 					"name": "Atualizar",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -68,6 +88,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -99,6 +129,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -126,6 +166,16 @@
 				{
 					"name": "Deletar",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -152,6 +202,51 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Autenticar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(responseCode.code === 200){\r",
+							"    var data = JSON.parse(responseBody);\r",
+							"    postman.setEnvironmentVariable('token', data.accessToken);\r",
+							"}\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"admin@admin.com\",\r\n    \"Senha\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/administradores/autenticar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"administradores",
+						"autenticar"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

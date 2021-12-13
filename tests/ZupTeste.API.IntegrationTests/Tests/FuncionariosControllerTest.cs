@@ -20,14 +20,14 @@ using ZupTeste.Repository.Repository;
 
 namespace ZupTeste.API.IntegrationTests.Tests;
 
-public class FuncionarioControllerTest : BaseHttpTest
+public class FuncionariosControllerTest : BaseHttpTest
 {
     
     private readonly IReadOnlyRepository<Funcionario> _readOnlyRepository;
     private readonly FuncionarioGenerator _generator;
     private readonly IReadOnlyRepository<Telefone> _telefoneRepository;
 
-    public FuncionarioControllerTest(CustomWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
+    public FuncionariosControllerTest(CustomWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
     {
         _readOnlyRepository = factory.ServiceProvider.GetService<IReadOnlyRepository<Funcionario>>();
         _telefoneRepository = factory.ServiceProvider.GetService<IReadOnlyRepository<Telefone>>();

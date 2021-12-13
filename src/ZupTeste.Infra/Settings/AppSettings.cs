@@ -5,5 +5,7 @@
         public bool IsTestEnv { get; set; }
         
         public DatabaseConnection DatabaseConnection { get; set; }
+        
+        public JwtSettings JwtSettings { get; set; }
     }
 }

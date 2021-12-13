@@ -5,10 +5,10 @@ namespace ZupTeste.Core
     public abstract partial class EntityBase
     {
         [Required]
-        public DateTime CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; set; }
         
         [Required]
-        public DateTime LastUpdatedAt { get; private set; }
+        public DateTime LastUpdatedAt { get; set; }
 
         public virtual void Created()
         {

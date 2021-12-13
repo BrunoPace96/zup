@@ -98,7 +98,7 @@ namespace ZupTeste.API.Common.Filters
             if (errors.Count == 0)
                 return;
 
-            var validationFailedResult = new ValidationFailedResult("Falha ao salvar", errors);
+            var validationFailedResult = new ValidationFailedResult("Erro ao executar operação", errors);
             context.Result = new BadRequestObjectResult(validationFailedResult);
         }
         

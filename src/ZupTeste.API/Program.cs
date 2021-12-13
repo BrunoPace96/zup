@@ -1,3 +1,4 @@
+using ZupTeste.API.Authentication;
 using ZupTeste.API.Common.Middlewares;
 using ZupTeste.API.Common.Setup;
 using ZupTeste.Infra.Data.Context;
@@ -12,7 +13,13 @@ var appSettings = builder.Configuration.Get<AppSettings>();
 builder.Services
     .AddCustomControllers()
     .AddApplicationDependencies(appSettings)
-    .AddEndpointsApiExplorer();
+    .AddEndpointsApiExplorer()
+    .AddJwtConfiguration(appSettings)
+    .Configure<RouteOptions>(options =>
+    {
+        options.LowercaseUrls = true;
+        options.LowercaseQueryStrings = true;
+    });
 
 if (!appSettings.IsTestEnv)
 {
@@ -39,7 +46,7 @@ if (!appSettings.IsTestEnv)
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseJwt();
 
 app.MapControllers();
 

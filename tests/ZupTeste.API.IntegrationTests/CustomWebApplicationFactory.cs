@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ZupTeste.API.IntegrationTests.Generator;
 using ZupTeste.Core.Extensions;
+using ZupTeste.Domain.Administradores;
 using ZupTeste.Infra.Data.Context;
 
 namespace ZupTeste.API.IntegrationTests;
@@ -14,6 +15,9 @@ namespace ZupTeste.API.IntegrationTests;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     public IServiceProvider ServiceProvider { get; private set; }
+
+    public Administrador AdministradorPadrao { get; set; }
+    
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -21,7 +25,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
-            
+
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
                      typeof(DbContextOptions<DatabaseContext>));
@@ -32,35 +36,35 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 typeof(BaseGenerator<>),
                 type => type,
                 Assembly.Load("ZupTeste.Api.IntegrationTests"));
-            
+
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDbForTesting");
                 options.UseInternalServiceProvider(serviceProvider);
             });
 
-            // var sp = services.BuildServiceProvider();
-            //
-            // using (var scope = sp.CreateScope())
-            // {
-            //     var scopedServices = scope.ServiceProvider;
-            //     var db = scopedServices.GetRequiredService<DatabaseContext>();
-            //     var logger = scopedServices
-            //         .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-            //
-            //     db.Database.EnsureCreated();
-            //
-            //     try
-            //     {
-            //         Utilities.InitializeDbForTests(db);
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         logger.LogError(ex, "An error occurred seeding the " +
-            //                             "database with test messages. Error: {Message}", ex.Message);
-            //     }
-            // }
-            
+            var sp = services.BuildServiceProvider();
+
+            using (var scope = sp.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<DatabaseContext>();
+
+                db.Database.EnsureCreated();
+
+                AdministradorPadrao = new Administrador
+                {
+                    Id = Guid.NewGuid(),
+                    Nome = "admin",
+                    Email = "admin@admin.com",
+                    Senha = "b16f5428b3b26c8782e791dc4261f57fb54847ce8372694e6841553edf16ab26;Jhhz7rO40tPtKqk",
+                    CreatedAt = new DateTime(2021, 03, 08, 12, 00, 00),
+                    LastUpdatedAt = new DateTime(2021, 03, 08, 12, 00, 00)
+                };
+                
+                db.Set<Administrador>().Add(AdministradorPadrao);
+            }
+
             ServiceProvider = services.BuildServiceProvider();
         }).UseEnvironment("IntegrationTest");
     }
