@@ -20,8 +20,24 @@ public class DatabaseContext : DbContext
     }
 
     public void ApplyMigrations()
-    {
+    {   
         if (Database.GetPendingMigrations().Any())
             Database.Migrate();
+    }
+    
+    public override int SaveChanges()
+    {
+        ChangeTracker
+            .ApplyAudit();
+        
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        ChangeTracker
+            .ApplyAudit();
+        
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

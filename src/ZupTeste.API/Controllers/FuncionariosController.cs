@@ -35,7 +35,7 @@ public class FuncionariosController : BaseController
     }
     
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(PaginatedResult<ObterListaFuncionariosResult>), StatusCodes.Status200OK)]
     public async Task<ActionResult<PaginatedResult<ObterListaFuncionariosResult>>> List(
         [FromQuery] PaginatedQuery<PaginatedResult<ObterListaFuncionariosResult>> command,
         CancellationToken cancellationToken = new ())
@@ -45,8 +45,9 @@ public class FuncionariosController : BaseController
     }
     
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<PaginatedResult<ObterListaFuncionariosResult>>> Get(
+    [ProducesResponseType(typeof(ObterFuncionarioPeloIdResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ObterFuncionarioPeloIdResult>> Get(
         [FromRoute] ByIdQuery<ObterFuncionarioPeloIdResult> command,
         CancellationToken cancellationToken = new ())
     {
@@ -55,7 +56,8 @@ public class FuncionariosController : BaseController
     }
     
     [HttpPut]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(AtualizarFuncionarioResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AtualizarFuncionarioResult>> Put(
         [FromBody] AtualizarFuncionarioCommand command,
         CancellationToken cancellationToken = new ())
@@ -66,6 +68,7 @@ public class FuncionariosController : BaseController
     
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(
         [FromRoute] ByIdCommand<DeletarFuncionarioResult> command,
         CancellationToken cancellationToken = new ())

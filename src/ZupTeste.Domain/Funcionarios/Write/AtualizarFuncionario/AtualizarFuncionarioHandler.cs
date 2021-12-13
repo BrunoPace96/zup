@@ -47,8 +47,8 @@ public class AtualizarFuncionarioHandler : IRequestHandler<AtualizarFuncionarioC
         
         if (!string.IsNullOrEmpty(command.LiderEmail))
         {
-            var lider = await _readOnlyRepository.FirstOrDefaultAsync(x =>
-                string.Equals(x.Email, command.LiderEmail, StringComparison.CurrentCultureIgnoreCase));
+            var lider = await _readOnlyRepository
+                .FirstOrDefaultAsync(x => x.Email.ToLower() == command.LiderEmail.ToLower());
 
             if (lider is null)
             {

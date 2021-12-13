@@ -1,12 +1,24 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using ZupTeste.DomainValidation.Extensions;
+using ZupTeste.Repository.Repository;
 
 namespace ZupTeste.Domain.Funcionarios.Write.AtualizarFuncionario;
 
 public class AtualizarFuncionarioValidator : AbstractValidator<AtualizarFuncionarioCommand>
 {
-    public AtualizarFuncionarioValidator()
+    public AtualizarFuncionarioValidator(IReadOnlyRepository<Funcionario> repository)
     {
+        RuleFor(x => x)
+            .CustomAsync(async (command, context, cancellationToken) =>
+            {
+                if (await repository
+                        .GetQuery()
+                        .AsNoTracking()
+                        .AnyAsync(x => x.NumeroChapa == command.NumeroChapa && x.Id != command.Id, cancellationToken))
+                    context.AddFailure(nameof(AtualizarFuncionarioCommand.NumeroChapa), "Número de chapa já existente");
+            });
+        
         RuleFor(x => x.Nome)
             .RequiredWithMessage()
             .MaximumLengthWithMessage(128);
@@ -22,7 +34,7 @@ public class AtualizarFuncionarioValidator : AbstractValidator<AtualizarFunciona
         RuleFor(x => x.NumeroChapa)
             .RequiredWithMessage()
             .MaximumLengthWithMessage(30);
-            
+
         RuleFor(x => x.LiderEmail)
             .EmailAddress()
             .WithMessage("O email informado no campo {PropertyName} é inválido");

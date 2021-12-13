@@ -28,8 +28,8 @@ public sealed class Repository<TEntity> : IRepository<TEntity>
     {
         if (_validator.HasErrors()) 
             return;
-            
-        if (_context.Entry(entity).State != EntityState.Modified)
+
+        if (entity.Id == Guid.Empty)
         {
             entity.Created();
             await _set.AddAsync(entity);

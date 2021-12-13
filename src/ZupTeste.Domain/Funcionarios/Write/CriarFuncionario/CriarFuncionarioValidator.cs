@@ -1,11 +1,13 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using ZupTeste.DomainValidation.Extensions;
+using ZupTeste.Repository.Repository;
 
 namespace ZupTeste.Domain.Funcionarios.Write.CriarFuncionario;
 
 public class CriarFuncionarValidator : AbstractValidator<CriarFuncionarioCommand>
 {
-    public CriarFuncionarValidator()
+    public CriarFuncionarValidator(IReadOnlyRepository<Funcionario> repository)
     {
         RuleFor(x => x.Nome)
             .RequiredWithMessage()
@@ -25,7 +27,15 @@ public class CriarFuncionarValidator : AbstractValidator<CriarFuncionarioCommand
 
         RuleFor(x => x.NumeroChapa)
             .RequiredWithMessage()
-            .MaximumLengthWithMessage(30);
+            .MaximumLengthWithMessage(30)
+            .CustomAsync(async (numeroChapa, context, cancellationToken) =>
+            {
+                if (await repository
+                        .GetQuery()
+                        .AsNoTracking()
+                        .AnyAsync(x => x.NumeroChapa == numeroChapa, cancellationToken))
+                    context.AddFailure(nameof(CriarFuncionarioCommand.NumeroChapa), "Número de chapa já existente");
+            });
             
         RuleFor(x => x.LiderEmail)
             .EmailAddress()

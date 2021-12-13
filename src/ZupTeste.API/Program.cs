@@ -21,8 +21,7 @@ if (!appSettings.IsTestEnv)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!appSettings.IsTestEnv)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
