@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "7fc02375-f6b5-4dd5-aa7f-14267aebd6dd",
+		"name": "Teste Zup API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Funcionarios",
+			"item": [
+				{
+					"name": "Criar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Antonio\",\r\n    \"sobrenome\": \"Garcia\",\r\n    \"email\": \"antonio.garcial@email.com\",\r\n    \"numeroChapa\": \"01010102\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 99999-9999\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/funcionarios",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"8ed28284-b392-4c35-9b0e-e57a2bf0d2a5\",\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Almeida\",\r\n    \"email\": \"joao.almeida@email.com\",\r\n    \"numeroChapa\": \"01010101\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 12313-9999\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/funcionarios",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter por id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"8ed28284-b392-4c35-9b0e-e57a2bf0d2a5\",\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Almeida\",\r\n    \"email\": \"joao.almeida@email.com\",\r\n    \"numeroChapa\": \"01010101\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 12313-9999\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/funcionarios/2fdfe093-39d2-42ae-a1ae-835108b48ce4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"funcionarios",
+								"2fdfe093-39d2-42ae-a1ae-835108b48ce4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"8ed28284-b392-4c35-9b0e-e57a2bf0d2a5\",\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Almeida\",\r\n    \"email\": \"joao.almeida@email.com\",\r\n    \"numeroChapa\": \"01010101\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 12313-9999\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/funcionarios",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"8ed28284-b392-4c35-9b0e-e57a2bf0d2a5\",\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Almeida\",\r\n    \"email\": \"joao.almeida@email.com\",\r\n    \"numeroChapa\": \"01010101\",\r\n    \"senha\": \"1@AAAbbb\",\r\n    \"liderEmail\": null,\r\n    \"telefones\": [\r\n        \"(41) 12313-9999\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/funcionarios/8ed28284-b392-4c35-9b0e-e57a2bf0d2a5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"funcionarios",
+								"8ed28284-b392-4c35-9b0e-e57a2bf0d2a5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
