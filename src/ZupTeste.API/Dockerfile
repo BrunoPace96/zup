@@ -1,20 +1,18 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+﻿FROM mcr.microsoft.com/dotnet/sdk:6.0 AS publish
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/ZupTeste.API/ZupTeste.API.csproj", "ZupTeste.API/"]
-RUN dotnet restore "src/ZupTeste.API/ZupTeste.API.csproj"
 COPY . .
-WORKDIR "/src/ZupTeste.API"
-RUN dotnet build "ZupTeste.API.csproj" -c Release -o /app/build
+RUN dotnet publish src/ZupTeste.API/ZupTeste.API.csproj -v m -c Release -o /app/publish
 
-FROM build AS publish
-RUN dotnet publish "ZupTeste.API.csproj" -c Release -o /app/publish
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS app
 
-FROM base AS final
+ARG ENVIRONMENT="DockerDev"
+ENV ASPNETCORE_ENVIRONMENT=$ENVIRONMENT
+ENV ASPNETCORE_URLS="http://+:5000"
 WORKDIR /app
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "ZupTeste.API.dll"]
+EXPOSE 5000
+EXPOSE 5001
