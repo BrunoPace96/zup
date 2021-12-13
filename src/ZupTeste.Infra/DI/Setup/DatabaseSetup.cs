@@ -14,15 +14,6 @@ namespace ZupTeste.Infra.DI.Setup
             AppSettings appSettings
         ) =>
             services.AddDbContextPool<DatabaseContext>(e =>
-                e.UseNpgsql(appSettings.DatabaseConnection.ConnectionString)
-                    .ConfigureWarnings(x => x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning))
-                    .LogTo(
-                        Console.WriteLine,
-                        new[] {DbLoggerCategory.Database.Command.Name},
-                        LogLevel.Information,
-                        DbContextLoggerOptions.DefaultWithLocalTime |
-                        DbContextLoggerOptions.SingleLine)
-                    .EnableSensitiveDataLogging()
-            );
+                e.UseNpgsql(appSettings.DatabaseConnection.ConnectionString));
     }
 }
