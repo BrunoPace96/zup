@@ -17,6 +17,12 @@ public class AtualizarFuncionarioValidator : AbstractValidator<AtualizarFunciona
                         .AsNoTracking()
                         .AnyAsync(x => x.NumeroChapa == command.NumeroChapa && x.Id != command.Id, cancellationToken))
                     context.AddFailure(nameof(AtualizarFuncionarioCommand.NumeroChapa), "Número de chapa já existente");
+                
+                if (await repository
+                        .GetQuery()
+                        .AsNoTracking()
+                        .AnyAsync(x => x.Email == command.Email && x.Id != command.Id, cancellationToken))
+                    context.AddFailure(nameof(AtualizarFuncionarioCommand.Email), "Já existe um funcionário com esse email cadastrado");
             });
         
         RuleFor(x => x.Nome)

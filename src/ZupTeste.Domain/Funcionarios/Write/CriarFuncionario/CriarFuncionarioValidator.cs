@@ -19,7 +19,15 @@ public class CriarFuncionarValidator : AbstractValidator<CriarFuncionarioCommand
             
         RuleFor(x => x.Email)
             .RequiredWithMessage()
-            .MaximumLengthWithMessage(256);
+            .MaximumLengthWithMessage(256)
+            .CustomAsync(async (email, context, cancellationToken) =>
+            {
+                if (await repository
+                        .GetQuery()
+                        .AsNoTracking()
+                        .AnyAsync(x => x.Email == email, cancellationToken))
+                    context.AddFailure(nameof(CriarFuncionarioCommand.Email), "Já existe um funcionário com esse email cadastrado");
+            });;
         
         RuleFor(x => x.Senha)
             .RequiredWithMessage()
